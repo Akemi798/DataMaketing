@@ -1,0 +1,86 @@
+﻿@model List<OkVip.ManagementDataMarketing.Models.ViewModels.DataImport.DataMarketingViewModel>
+
+@{
+    ViewBag.Title = "Quản Lý Data";
+    ViewBag.pTitle = "Quản Lý Data";
+    ViewBag.pageTitle = "Quản Trị";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<partial name="_TempDataErrorPartial" />
+
+<div class="card">
+    <div class="card-header align-items-center d-flex">
+
+        <!-- Buttons Group -->
+        <div class="d-flex float-right">
+            @using (Html.BeginForm("ImportData", "DataMarketing", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <input type="file" name="postedFile" />
+                <input type="submit" class="btn btn-primary" value="Import" />
+            }
+            <a asp-action="ExportToExcel" asp-controller="DataMarketing" class="btn btn-primary">Xuất data đã lọc</a>
+            <a asp-action="ExportDuplicateDataToExcel" asp-controller="DataMarketing" class="btn btn-primary">Xuất data trùng</a>
+            <a asp-action="DeleteDuplicateData" asp-controller="DataMarketing" class="btn btn-primary">Xóa data trùng</a>
+
+        </div>
+    </div><!-- end card header -->
+    <div class="card-body">
+        <div class="row">
+            <table class="table align-middle table-nowrap table-sm table-hover" id="main-table">
+                <thead>
+                    <tr>
+                        <th>SĐT</th>
+                        <th>Tên nhân viên</th>
+                        <th>Ngày mua</th>
+                        <th>Ngày tạo</th>
+                        <th>Data trang web</th>
+                        <th>Ghi chú</th>
+                        <th>Trùng</th>
+                        <th>Sửa</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-center">@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
+                            <td class="text-center">@Html.DisplayFor(modelItem => item.EmployeeName)</td>
+                            <td>@Html.DisplayFor(modelItem => item.BuyDate)</td>
+                            <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>
+                            <td>@Html.DisplayFor(modelItem => item.DataBuyOfWeb)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Note)</td>
+                            <td class="text-center">
+                                @if (item.IsDuplicate)
+                                {
+                                    <i class="ri-checkbox-circle-fill"></i>
+                                }
+                            </td>
+                            <td>
+                                <a asp-action="Update" asp-route-id="@item.Id">
+                                    <span class="badge badge-soft-secondary"><i class="ri-settings-4-line"></i> Edit</span>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div><!--end row-->
+    </div><!-- end card-body -->
+</div>
+
+@section Scripts {
+
+    <script>
+        $(document).ready(function () {
+            var table = $('#main-table').DataTable({
+                responsive: false,
+                language: {
+                    url: '/lib/datatables/vi.json'
+                }
+            });
+
+        });
+
+    </script>
+}

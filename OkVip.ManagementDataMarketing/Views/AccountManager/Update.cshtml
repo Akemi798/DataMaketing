@@ -1,0 +1,102 @@
+﻿@model OkVip.ManagementDataMarketing.Models.ViewModels.Account.UpdateAccountViewModel
+
+@{
+    ViewBag.Title = "Cập nhật user";
+    ViewBag.pTitle = "Cập nhật user";
+    ViewBag.pageTitle = "Quản Lý User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row justify-content-center">
+    <div class="col-xxl-6">
+        <div class="card">
+            <div class="card-header align-items-center d-flex">
+                <h3 class="card-title mb-0 flex-grow-1">Thông Tin User</h3>
+                <a href="#" data-bs-toggle="modal" data-bs-target="#ggauth_@Model.Id">
+                    <span class="badge badge-soft-secondary"><i class="ri-key-2-line"></i> Google Authenticator</span>
+                </a>
+                <div id="ggauth_@Model.Id" class="modal fade" tabindex="-1" aria-labelledby="ModalLabel_ggauth_@Model.Id" aria-hidden="true" style="display: none;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="ModalLabel_ggauth_@Model.Id">Google Authenticator</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="text-center">
+                                    <img src="@Model.QrCode" style="height:100%;" />
+                                </div>
+                                <br />
+                                <div class="text-center">
+                                    Mã Dự Phòng: <label>@Model.ManualEntryKey</label>
+                                </div>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+
+
+            </div><!-- end card header -->
+            <div class="card-body">
+                <form asp-action="Update">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    @Html.HiddenFor(model => model.Id)
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label asp-for="UserName" class="control-label"></label>
+                                <input asp-for="UserName" class="form-control" readonly="readonly" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label asp-for="Password" class="control-label"></label>
+                                <input asp-for="Password" class="form-control" />
+                                <i class="text-info" style="font-size:10px">*để trống nếu bạn không muốn đổi password</i>
+                                <br />
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <label asp-for="ConfirmPassword" class="control-label"></label>
+                                <input asp-for="ConfirmPassword" class="form-control" />
+                                <i class="text-info" style="font-size:10px">*để trống nếu bạn không muốn đổi password</i>
+                                <br />
+                                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <div class="checkbox">
+                                    <label>
+                                        <input asp-for="IsAdmin" /> @Html.DisplayNameFor(model => model.IsAdmin)
+                                    </label>
+                                    <i class="text-info" style="font-size:10px">*admin có quyền quản lý user</i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <div class="checkbox">
+                                    <label>
+                                        <input asp-for="IsActivated" /> @Html.DisplayNameFor(model => model.IsActivated)
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="mb-3">
+                                <input type="submit" value="Cập nhật" class="btn btn-primary waves-effect waves-light w-100" />
+                            </div>
+                        </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+﻿<!doctype html>
+<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-layout-mode="light" data-layout-width="fluid" data-layout-position="fixed" data-layout-style="default">
+<head>
+    <partial name="_title_meta" />
+    @RenderSection("styles", required: false)
+    <partial name="_head_css" />
+    <style>
+        body {
+            font-family: 'Oswald', sans-serif !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+        <partial name="_menu" />
+
+        <!-- ============================================================== -->
+        <!-- Start right Content here -->
+        <!-- ============================================================== -->
+        <div class="main-content">
+
+            <div class="page-content">
+                <div class="container-fluid">
+                    <partial name="_page_title" />
+                    @RenderBody()
+                </div>
+            </div>
+            <partial name="_footer" />
+        </div>
+
+    </div>
+    <!-- END layout-wrapper -->
+    <partial name="_customizer" />
+    <partial name="_vendor_scripts" />
+    <script src="~/assets/js/app.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

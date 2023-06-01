@@ -1,0 +1,98 @@
+﻿@model List<OkVip.ManagementDataMarketing.Models.ViewModels.Account.AccountViewModel>
+
+@{
+    ViewBag.Title = "Quản Lý User";
+    ViewBag.pTitle = "Quản Lý User";
+    ViewBag.pageTitle = "Quản Trị";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<partial name="_TempDataErrorPartial" />
+
+<div class="card">
+    <div class="card-header align-items-center d-flex">
+        <h3 class="card-title mb-0 flex-grow-1">Danh Sách User</h3>
+        <!-- Buttons Group -->
+        <a asp-action="Create" class="btn btn-primary btn-sm waves-effect waves-light">
+            <i class="ri-user-add-fill"></i> Tạo Mới
+        </a>
+    </div><!-- end card header -->
+    <div class="card-body">
+        <div class="row">
+            <table class="table align-middle table-nowrap table-sm table-hover" id="main-table1">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Còn hoạt động</th>
+                        <th>Quyền admin</th>
+                        <th>Ngày tạo</th>
+                        <th>Ngày cập nhật</th>
+                        <th>Authenticator</th>
+                        <th>Tùy chọn</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-center">@Html.DisplayFor(modelItem => item.UserName)</td>
+                            <td class="text-center">
+                                @if (item.IsActivated)
+                                {
+                                    <i class="ri-checkbox-circle-fill"></i>
+                                }
+                            </td>
+                            <td class="text-center">
+                                @if (item.IsAdmin)
+                                {
+                                    <i class="ri-checkbox-circle-fill"></i>
+                                }
+                            </td>
+                            <td>@Html.DisplayFor(modelItem => item.CreateDate)</td>
+                            <td>@Html.DisplayFor(modelItem => item.UpdateDate)</td>
+                            <td>
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#ggauth_@item.Id">
+                                    <span class="badge badge-soft-secondary"><i class="ri-key-2-line"></i> Google Authenticator</span>
+                                </a>
+                                <div id="ggauth_@item.Id" class="modal fade" tabindex="-1" aria-labelledby="ModalLabel_ggauth_@item.Id" aria-hidden="true" style="display: none;">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="ModalLabel_ggauth_@item.Id">Google Authenticator</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"> </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="text-center">
+                                                    <img src="@item.QrCode" style="height:100%;" />
+                                                </div>
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal -->
+                            </td>
+                            <td>
+                                <a asp-action="Update" asp-route-id="@item.Id">
+                                    <span class="badge badge-soft-secondary"><i class="ri-settings-4-line"></i> Edit</span>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div><!--end row-->
+    </div><!-- end card-body -->
+</div>
+
+@section Scripts {
+
+    <script>
+        $(document).ready(function () {
+            var table = $('#main-table1').DataTable({
+                responsive: false,
+                language: {
+                    url: '/lib/datatables/vi.json'
+                }
+            });
+        });
+    </script>
+}

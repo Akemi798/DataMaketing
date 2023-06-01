@@ -1,0 +1,30 @@
+﻿@{
+    if (TempData != null)
+    {
+        var errorMessageTempData = TempData[OkVip.ManagementDataMarketing.Commons.Constants.TempDataConstants.TEMP_DATA_ERROR_MESSAGE];
+        if (errorMessageTempData != null)
+        {
+            string errorMessage = errorMessageTempData.ToString();
+            if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <div class="alert alert-danger shadow" role="alert">
+                    <strong> Error: </strong> @errorMessage
+                </div>
+            }
+        }
+
+        var infoMessageTempData = TempData[OkVip.ManagementDataMarketing.Commons.Constants.TempDataConstants.TEMP_DATA_INFO_MESSAGE]; ;
+        if (infoMessageTempData != null)
+        {
+            string infoMessage = infoMessageTempData.ToString();
+            if (!string.IsNullOrEmpty(infoMessage))
+            {
+                <div class="alert alert-secondary shadow" role="alert">
+                    <strong>Thông báo: </strong> @infoMessage
+                </div>
+            }
+        }
+    }
+
+}
+
